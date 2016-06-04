@@ -13,15 +13,17 @@ RUN apt-get -y update
 RUN apt-get -y install openjdk-7-jre-headless wget
 
 # Download Minecraft Server components
-RUN wget -q https://s3.amazonaws.com/Minecraft.Download/versions/1.9.2/minecraft_server.1.9.2.jar
+RUN wget -q https://s3.amazonaws.com/Minecraft.Download/versions/1.9.4/minecraft_server.1.9.4.jar
 
 # Sets working directory for the CMD instruction (also works for RUN, ENTRYPOINT commands)
 # Create mount point, and mark it as holding externally mounted volume
 WORKDIR /data
 VOLUME /data
 
+COPY server.properties /data/server.properties
+
 # Expose the container's network port: 25565 during runtime.
 EXPOSE 25565
 
 #Automatically accept Minecraft EULA, and start Minecraft server
-CMD echo eula=true > /data/eula.txt && java -jar /minecraft_server.1.9.2.jar
+CMD echo eula=true > /data/eula.txt && java -jar /minecraft_server.1.9.4.jar
