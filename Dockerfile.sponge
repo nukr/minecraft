@@ -3,17 +3,17 @@
 
 # Use the offical Debian Docker image with a specified version tag, Wheezy, so not all
 # versions of Debian images are downloaded.
-FROM debian:wheezy
+FROM ubuntu:xenial
 
 MAINTAINER Michael Chiang <mchiang@docker.com>
 
 # Use APT (Advanced Packaging Tool) built in the Linux distro to download Java, a dependency
 # to run Minecraft.
 RUN apt-get -y update
-RUN apt-get -y install openjdk-7-jre-headless wget
+RUN apt-get -y install openjdk-8-jre-headless wget
 
 # Download Minecraft Server components
-RUN wget -q https://s3.amazonaws.com/Minecraft.Download/versions/1.10/minecraft_server.1.10.jar
+RUN wget -q https://repo.spongepowered.org/maven/org/spongepowered/spongevanilla/1.9.4-5.0.0-BETA-62/spongevanilla-1.9.4-5.0.0-BETA-62.jar
 
 # Sets working directory for the CMD instruction (also works for RUN, ENTRYPOINT commands)
 # Create mount point, and mark it as holding externally mounted volume
@@ -21,9 +21,10 @@ WORKDIR /data
 VOLUME /data
 
 COPY server.properties /data/server.properties
+COPY mods /data/mods
 
 # Expose the container's network port: 25565 during runtime.
 EXPOSE 25565
 
 #Automatically accept Minecraft EULA, and start Minecraft server
-CMD echo eula=true > /data/eula.txt && java -jar /minecraft_server.1.10.jar
+CMD echo eula=true > /data/eula.txt && java -jar /spongevanilla-1.9.4-5.0.0-BETA-62.jar
