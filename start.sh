@@ -9,4 +9,4 @@ java -jar /data/BuildTools.jar --rev ${SPIGOT_VERSION}
 
 echo eula=true > /data/eula.txt
 
-java -Xms512M -Xmx1G -XX:MaxPermSize=128M -XX:+UseConcMarkSweepGC -jar /data/spigot-${SPIGOT_VERSION}.jar
+java -Xms1G -Xmx4G -XX:MaxPermSize=128M -XX:+UseConcMarkSweepGC -jar /data/spigot-${SPIGOT_VERSION}.jar
